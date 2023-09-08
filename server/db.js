@@ -73,11 +73,11 @@ const buildDB = async () => {
 
 
     // Create Indexes
-   // await pool.query('CREATE INDEX style_index ON styles USING hash(product_id)');
-   // await pool.query('CREATE INDEX photo_index ON photos USING hash(style_id)');
-   // await pool.query('CREATE INDEX sku_index ON skus USING hash(style_id)');
-   // await pool.query('CREATE INDEX product_index ON product USING hash(id)');
-   // await pool.query('CREATE INDEX features_index ON features USING hash(product_id)');
+   await pool.query('CREATE INDEX style_index ON styles USING hash(product_id)');
+   await pool.query('CREATE INDEX photo_index ON photos USING hash(style_id)');
+   await pool.query('CREATE INDEX sku_index ON skus USING hash(style_id)');
+   await pool.query('CREATE INDEX product_index ON product USING hash(id)');
+   await pool.query('CREATE INDEX features_index ON features USING hash(product_id)');
 
     await importCSV('product', 'csv_files/product.csv');
     await importCSV('styles', 'csv_files/styles.csv');

@@ -31,7 +31,7 @@ module.exports = {
     try {
       const start = Date.now();
       const styles = await client.query(queryString, [productId]);
-     logQueryExecutionTime('Get Product styles Query time:', start);
+     logQueryExecutionTime('Get Product styles query time:', start);
       return { product_id: productId, results: styles.rows[0].jsonb_agg };
     } finally {
       client.release();
@@ -61,7 +61,7 @@ module.exports = {
     try {
     const start = Date.now();
       const products = await client.query(queryString, [productId]);
-     logQueryExecutionTime('Get one product query time', start);
+     logQueryExecutionTime('Get one product features query time', start);
       return products.rows[0].jsonb_build_object;
     } finally {
       client.release();
