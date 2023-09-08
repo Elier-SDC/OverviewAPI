@@ -3,12 +3,13 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
+
 const pool = new Pool({
-  user: 'heithm',
-  host: 'localhost',
-  database: 'elier',
-  password: '',
-  port: '5432',
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 const connectDB = async () => {
