@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "elier",
+  "version": "1.0.0",
+  "description": "RESTful API with Node.js, Express, and PostgreSQL",
+  "author": "Heith Mahfoudhi",
   "license": "",
   "engines": {
     "node": ">=6.13.0"
