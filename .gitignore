@@ -1,6 +1,7 @@
 ## MAC files ##
 .DS_Store
 .env
+/server/cvs_files
 
 ## NPM ##
 npm
