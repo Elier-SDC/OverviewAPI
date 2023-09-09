@@ -3,7 +3,8 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
-
+const csvDirectory = path.join(__dirname, 'csv_files');
+const schemaPath = path.join(__dirname, 'schema.sql');
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -16,23 +17,18 @@ const connectDB = async () => {
   await pool.connect();
 };
 
-
-
 const closeDB = async () => {
-    try {
-      await pool.end();
-      console.log('Pool has ended');
-    } catch (error) {
-      console.error('Error closing the pool:', error);
-    }
-  };
-
-
-
+  try {
+    await pool.end();
+    console.log('Pool has ended');
+  } catch (error) {
+    console.error('Error closing the pool:', error);
+  }
+};
 
 const importCSV = async (tableName, filePath) => {
   try {
-    const fullPath = path.resolve(__dirname, filePath);
+    const fullPath = path.join(csvDirectory, filePath);
     const copyQuery = `COPY ${tableName} FROM '${fullPath}' DELIMITER ',' NULL AS 'null' CSV HEADER`;
 
     await pool.query(copyQuery);
@@ -42,49 +38,36 @@ const importCSV = async (tableName, filePath) => {
   }
 };
 
+const dropTableIfExists = async (tableName) => {
+  await pool.query(`DROP TABLE IF EXISTS ${tableName} CASCADE`);
+};
 
 const buildDB = async () => {
   try {
     await connectDB();
     console.log('Connected to the database');
 
-
-    const productFilePath = path.join(__dirname, 'csv_files/product.csv');
-    const stylesFilePath = path.join(__dirname, 'csv_files/styles.csv');
-    const skusFilePath = path.join(__dirname, 'csv_files/skus.csv');
-    const photosFilePath = path.join(__dirname, 'csv_files/photos.csv');
-    const featuresFilePath = path.join(__dirname, 'csv_files/features.csv');
-
     // Create the "public" schema if it doesn't exist
     await pool.query('CREATE SCHEMA IF NOT EXISTS public');
 
-    // DROP existing tables if they exist
-    await pool.query('DROP TABLE IF EXISTS product CASCADE');
-    await pool.query('DROP TABLE IF EXISTS styles CASCADE');
-    await pool.query('DROP TABLE IF EXISTS skus CASCADE');
-    await pool.query('DROP TABLE IF EXISTS photos CASCADE');
-    await pool.query('DROP TABLE IF EXISTS features CASCADE');
+    // Drop existing tables if they exist
+    await dropTableIfExists('product');
+    await dropTableIfExists('styles');
+    await dropTableIfExists('skus');
+    await dropTableIfExists('photos');
+    await dropTableIfExists('features');
 
     // Read the schema.sql file
-    const schemaPath = path.join(__dirname, 'schema.sql');
     const schemaSQL = fs.readFileSync(schemaPath, 'utf8');
 
     // Execute the SQL script to create tables and indexes
     await pool.query(schemaSQL);
 
-
-    // Create Indexes
-   await pool.query('CREATE INDEX style_index ON styles USING hash(product_id)');
-   await pool.query('CREATE INDEX photo_index ON photos USING hash(style_id)');
-   await pool.query('CREATE INDEX sku_index ON skus USING hash(style_id)');
-   await pool.query('CREATE INDEX product_index ON product USING hash(id)');
-   await pool.query('CREATE INDEX features_index ON features USING hash(product_id)');
-
-    await importCSV('product', 'csv_files/product.csv');
-    await importCSV('styles', 'csv_files/styles.csv');
-    await importCSV('features', 'csv_files/features.csv');
-    await importCSV('photos', 'csv_files/photos.csv');
-    await importCSV('skus', 'csv_files/skus.csv');
+    // Import CSVs
+    const csvFileNames = ['product.csv', 'styles.csv', 'features.csv', 'photos.csv', 'skus.csv'];
+    for (const fileName of csvFileNames) {
+      await importCSV(fileName.replace('.csv', ''), fileName);
+    }
   } catch (error) {
     console.error('Error building the database schema:', error);
   } finally {
