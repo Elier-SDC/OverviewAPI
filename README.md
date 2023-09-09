@@ -1,39 +1,16 @@
-# Project Name
+# ÉLIER API
+### Problem
+The objective of this project is to update an existing API service designed for an eCommerce website called ÉLIER. The service's performance requirements necessitate a maximum latency of 2000ms, support for 100 requests per second, and an error rate below 1%. Subsequently, the plan is to deploy and scale this service to accommodate at least 100 requests per second on an EC2 instance using a t2.micro configuration.
 
-> Project description
+### Approach
+Given the highly organized nature of eCommerce data and the need for rapid data access to enhance the customer experience, a decision was made to employ a relational database.
 
-## Related Projects
+My responsibility entailed managing the endpoints for the product details section of the website, which involved handling substantial data volumes and ensuring speedy accessibility. Consequently, the predefined service level agreement (SLA) appeared somewhat lenient, prompting me to aim for higher performance standards.
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+The initial challenge revolved around selecting a suitable database solution. While contemplating the use of MongoDB, a NoSQL database, I ultimately opted for a relational database due to its compatibility with the ordered data structure. This choice minimized data redundancy and enhanced query efficiency, as the table headings occupied defined memory spaces.
 
-## Table of Contents
+In the quest for an appropriate SQL database, I settled on PostgreSQL after discovering its robust aggregate functions. The frontend already anticipated data in a specific format, leading me to hypothesize that combining tables within the database would outperform fetching data and conducting post-processing using JavaScript.
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+This hypothesis was confirmed by the results. To provide additional context, initial query times exceeded 20 seconds. By introducing indexing, response times were significantly reduced to approximately 530ms. Notably, this performance gain was achieved without resorting to aggregate functions or table joins. Upon implementing aggregate functions, I further reduced latency to 29ms while handling 650 requests per second.
 
-## Usage
-
-> Some usage instructions
-
-## Requirements
-
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
-- etc
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-npm install -g webpack
-npm install
-```
-
+Finally, for deployment, an AWS infrastructure was selected, consisting of an NGINX EC2 T2 Micro instance for load balancing and caching, a single instance used for server and database using Docker. This configuration resulted in a remarkable 24ms latency and the capability to handle up to 3000 requests per second with a flawless error rate of 0%.
