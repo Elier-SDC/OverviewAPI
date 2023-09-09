@@ -1,6 +1,18 @@
-# ÉLIER API
+# ÉLIER Overview Section API
 ### Problem
-The objective of this project is to update an existing API service designed for an eCommerce website called ÉLIER. The service's performance requirements necessitate a maximum latency of 2000ms, support for 100 requests per second, and an error rate below 1%. Subsequently, the plan is to deploy and scale this service to accommodate at least 100 requests per second on an EC2 instance using a t2.micro configuration.
+The objective of this project is to create an API service designed for an eCommerce website called ÉLIER. The service's performance requirements necessitate a maximum latency of 2000ms, support for 100 requests per second, and an error rate below 1%. Subsequently, the plan is to deploy and scale this service to accommodate at least 100 requests per second on an EC2 instance using a t2.micro configuration.
+
+### Achievement
+In the final stages of this project, I successfully achieved outstanding results. I attained a remarkable latency of just 24ms, enabling the system to effortlessly handle a staggering 3000 requests per second. Most notably, the error rate remained consistently at an impeccable 0%.
+
+## Built With
+![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![ExpressJS](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1.svg?style=for-the-badge&logo=PostgreSQL&logoColor=white)
+![AWS](https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED.svg?style=for-the-badge&logo=Docker&logoColor=white)
+
+
 
 ### Approach
 Given the highly organized nature of eCommerce data and the need for rapid data access to enhance the customer experience, a decision was made to employ a relational database.
