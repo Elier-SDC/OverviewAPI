@@ -17,7 +17,7 @@ In the final stages of this project, I successfully achieved outstanding results
 ### Approach
 Given the highly organized nature of eCommerce data and the need for rapid data access to enhance the customer experience, a decision was made to employ a relational database.
 
-My responsibility entailed managing the endpoints for the product details section of the website, which involved handling substantial data volumes and ensuring speedy accessibility. Consequently, the predefined service level agreement (SLA) appeared somewhat lenient, prompting me to aim for higher performance standards.
+My responsibility entailed managing the endpoints for the product details section of the website, which involved handling substantial data volumes and ensuring speedy accessibility (Including images, stock,and important product information). Consequently, the predefined service level agreement (SLA) appeared somewhat lenient, prompting me to aim for higher performance standards.
 
 The initial challenge revolved around selecting a suitable database solution. While contemplating the use of MongoDB, a NoSQL database, I ultimately opted for a relational database due to its compatibility with the ordered data structure. This choice minimized data redundancy and enhanced query efficiency, as the table headings occupied defined memory spaces.
 
